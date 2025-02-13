@@ -1,15 +1,23 @@
 <style>
  .player {
      background-color: magenta;
-     display: flex;
+     display: flex; gap: 8px;
      padding: 8px;
  }
 
- .player span {
+ .player span.pfp {
+     width: 36px; height: 36px;
+     background-color: black;
+ }
+
+ .player span.player-name {
      flex-grow: 1;
      align-content: center;
  }
 </style>
 {% for player in players %}
-    <div class="player"><span>{{ player.name }}</span></div>
+    <div class="player">
+        <span class="pfp"></span>
+        <span class="player-name">{{ player.name }}</span>
+    </div>
 {% endfor %}
