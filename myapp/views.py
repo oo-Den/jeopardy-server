@@ -22,7 +22,6 @@ def main(request: HttpRequest):
                     "title": f"title {i}",
                     "cards": [
                         {
-                            "id": randint(1, 65535),
                             "value": j
                         } for j in range(value, value * rows + 1, value)
                     ]
@@ -31,7 +30,7 @@ def main(request: HttpRequest):
         }
     })
 
-def question(request: HttpRequest, question_id: int):
+def question(request: HttpRequest, column_id: int, card_id: int):
     return render(request, "myapp/question-screen.html", {
         "players": [
             {'name': 'irata'},
@@ -39,5 +38,5 @@ def question(request: HttpRequest, question_id: int):
             {'name': 'irata'},
             {'name': 'irata'},
         ],
-        "question": {"id": question_id, "text": "Lorem ipsum"}
+        "question": {"text": "Lorem ipsum"}
     })

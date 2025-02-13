@@ -22,6 +22,6 @@
         }
     </style>
     {% for column in board.columns %}
-        {% include 'myapp/boards/column.html' with i=loop.index %}
+        {% include 'myapp/boards/column.html' with column_id=forloop.counter %}
     {% endfor %}
 </div>
