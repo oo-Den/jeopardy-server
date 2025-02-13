@@ -1,21 +1,7 @@
 {% extends "myapp/main.html" %}
 
 {% block players %}
-    <style>
-       .player {
-           background-color: magenta;
-           display: flex;
-           padding: 8px;
-       }
-
-       .player span {
-           flex-grow: 1;
-           align-content: center;
-       }
-    </style>
-    {% for player in players %}
-        <div class="player"><span>{{ player.name }}</span></div>
-    {% endfor %}
+    {% include 'myapp/players/default.html' %}
 {% endblock %}
 
 {% block game_screen %}
