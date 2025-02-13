@@ -1,10 +1,11 @@
+<div class="card column-title" style="grid-row: 1">
+    <span>{{ column.title }}</span>
+</div>
 <div class="column" id="column-{{ i }}"
-    style="display: grid; grid-row: 1/-1;
-       grid-template-columns: 1fr;
-       grid-template-rows: subgrid;">
-    <div class="card column-title" style="grid-row: 1">
-        <span>{{ column.title }}</span>
-    </div>
+     style="grid-row: 2;
+            display: grid;
+            grid-template-rows: repeat({% if board.flexible_layout %}{{ column.cards | length }}{% else %}{{ board.rows }}{% endif %}, 1fr);
+            gap: 8px;">
     {% for card in column.cards %}
         {% include 'myapp/boards/card.html' with j=loop.index %}
     {% endfor %}

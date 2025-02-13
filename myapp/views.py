@@ -15,7 +15,8 @@ def main(request: HttpRequest):
             {'name': 'irata'},
         ],
         "board": {
-            "rows": rows + 1,
+            "rows": rows,
+            "flexible_layout": False,
             "columns": [
                 {
                     "title": f"title {i}",
