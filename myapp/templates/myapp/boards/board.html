@@ -1,0 +1,27 @@
+<div id="board" style="display: grid; height: 100%;
+                       grid-template-columns: repeat({{ board.columns | length }}, 1fr);
+                       grid-template-rows: repeat({{ board.rows }}, 1fr);
+                       gap: 8px;">
+    <style>
+        .card {
+            background-color: blue;
+            align-content: center;
+            text-align: center;
+            border: none;
+        }
+
+        .card span {
+            color: #ffbb00;
+            font-weight: bold;
+            font-family: sans;
+            font-size: 28px;
+        }
+
+        .column-title span {
+            color: white;
+        }
+    </style>
+    {% for column in board.columns %}
+        {% include 'myapp/boards/column.html' with i=loop.index %}
+    {% endfor %}
+</div>

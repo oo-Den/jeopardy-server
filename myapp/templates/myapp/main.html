@@ -1,0 +1,26 @@
+{% extends "myapp/base.html" %}
+
+{% block head%}
+    <title>jopady</title>
+{% endblock %}
+
+{% block body%}
+    <div id="contents" 
+         style="display: flex; flex-flow: row nowrap; gap: 8px;
+                padding: 8px; height: 100%;
+                background-color: black;">
+        {% block content %}
+            <div id="players" 
+                 style="flex-basis: 20%;
+                        display: flex; flex-flow: column; gap: 8px;">
+                {% block players %}
+                {% endblock %}
+            </div>
+            
+            <div id="game-screen" style="flex-grow: 1;">
+                {% block game_screen %}
+                {% endblock %}
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}

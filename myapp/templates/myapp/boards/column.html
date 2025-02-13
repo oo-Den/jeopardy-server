@@ -1,0 +1,11 @@
+<div class="column" id="column-{{ i }}"
+    style="display: grid; grid-row: 1/-1;
+       grid-template-columns: 1fr;
+       grid-template-rows: subgrid;">
+    <div class="card column-title" style="grid-row: 1">
+        <span>{{ column.title }}</span>
+    </div>
+    {% for card in column.cards %}
+        {% include 'myapp/boards/card.html' with j=loop.index %}
+    {% endfor %}
+</div>
