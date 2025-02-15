@@ -9,7 +9,7 @@ class ColumnInline(admin.TabularInline):
     verbose_name_plural = "Columns"
 @admin.register(Board)
 class BoardAdmin(admin.ModelAdmin):
-    fields = ['name']
+    fields = ['name', 'author']
     list_display = ['name', 'get_columns', 'get_cards_num']
 
     inlines = [ColumnInline]
