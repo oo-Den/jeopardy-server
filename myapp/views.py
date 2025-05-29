@@ -16,14 +16,14 @@ def main(request: HttpRequest):
         ],
         "board": {
             "rows": rows,
-            "flexible_layout": False,
+            "flexible_layout": True,
             "columns": [
                 {
                     "title": f"title {i}",
                     "cards": [
                         {
                             "value": j
-                        } for j in range(value, value * rows + 1, value)
+                        } for j in range(value, value * (i+1) + 1, value)
                     ]
                 } for i in range(6)
             ]
