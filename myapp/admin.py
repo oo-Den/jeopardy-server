@@ -9,8 +9,8 @@ class ColumnInline(admin.TabularInline):
     verbose_name_plural = "Columns"
 @admin.register(Board)
 class BoardAdmin(admin.ModelAdmin):
-    fields = ['name', 'author']
-    list_display = ['name', 'get_columns', 'get_cards_num']
+    fields = ['name', 'owner']
+    list_display = ['name', 'get_columns', 'get_cards_num', 'owner']
 
     inlines = [ColumnInline]
 
@@ -28,8 +28,8 @@ class CardInline(admin.TabularInline):
     verbose_name_plural = "Cards"
 @admin.register(Column)
 class ColumnAdmin(admin.ModelAdmin):
-    fields = ['title']
-    list_display = ['title', 'get_cards']
+    fields = ['title', 'owner']
+    list_display = ['title', 'get_cards', 'owner']
 
     inlines = [CardInline]
 
@@ -39,4 +39,9 @@ class ColumnAdmin(admin.ModelAdmin):
 
 @admin.register(Card)
 class CardAdmin(admin.ModelAdmin):
-    fields = ['front', 'back']
+    fields = ['front', 'back', 'owner']
+    list_display = ['get_content', 'owner']
+
+    @admin.display(description="Content")
+    def get_content(self, obj: Card):
+        return str(obj)

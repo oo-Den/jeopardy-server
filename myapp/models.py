@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 class Card(models.Model):
     front = models.CharField(max_length=100)
     back = models.CharField(max_length=100)
+    owner = models.ForeignKey(User, models.CASCADE, null=True)
 
     def __str__(self):
         return f"{self.front} - {self.back}"
@@ -17,6 +18,7 @@ class Column(models.Model):
         through="ColumnCell",
         through_fields=("column", "card")
     )
+    owner = models.ForeignKey(User, models.CASCADE, null=True)
 
     def __str__(self):
         return self.title
@@ -28,7 +30,7 @@ class Board(models.Model):
         through="BoardColumn",
         through_fields=("board", "column")
     )
-    author = models.ForeignKey(User, models.CASCADE, null=True)
+    owner = models.ForeignKey(User, models.CASCADE, null=True)
 
     def __str__(self):
         return self.name
