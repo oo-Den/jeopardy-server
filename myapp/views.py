@@ -31,7 +31,12 @@ def main(request: HttpRequest):
     })
 
 def question(request: HttpRequest, column_id: int, card_id: int):
-    return render(request, "myapp/question-screen.html", {
+    template_name = "myapp/question-screen.html"
+
+    if "X-Partial" in request.headers:
+        template_name += "#" + request.headers["X-Partial"]
+
+    return render(request, template_name, {
         "players": [
             {'name': 'irata'},
             {'name': 'irata'},
