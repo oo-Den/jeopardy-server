@@ -1,0 +1,9 @@
+{% extends "myapp/main.html" %}
+
+{% block players %}
+    {% include 'myapp/players/default.html' %}
+{% endblock %}
+
+{% block game_screen %}
+    {% include 'myapp/boards/board.html' %}
+{% endblock %}
