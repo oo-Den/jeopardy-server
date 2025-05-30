@@ -2,46 +2,83 @@ from django.shortcuts import render
 from django.http import HttpRequest
 from random import randint
 
-def main(request: HttpRequest):
-    rows: int = 5
-    value: int = 200
-    
-    return render(request, "myapp/board-screen.html", {
+from django.db.models import Max
+
+from .models import Board, Column, BoardColumn, ColumnCell, Card
+
+
+def board(request: HttpRequest, board_id: int):
+    board: Board = Board.objects.get(id=board_id)
+
+    data = {
         "currency_sign": "$",
         "players": [
-            {'name': 'irata'},
-            {'name': 'irata'},
-            {'name': 'irata'},
-            {'name': 'irata'},
+            {"name": "irata"},
+            {"name": "irata"},
+            {"name": "irata"},
+            {"name": "irata"},
         ],
-        "board": {
-            "rows": rows,
-            "flexible_layout": True,
-            "columns": [
-                {
-                    "title": f"title {i}",
-                    "cards": [
-                        {
-                            "value": j
-                        } for j in range(value, value * (i+1) + 1, value)
-                    ]
-                } for i in range(6)
-            ]
-        }
-    })
+    }
 
-def question(request: HttpRequest, column_id: int, card_id: int):
+    data["board"] = {
+        "num_rows": 0,
+        "flexible_layout": False,
+    }
+    board_column_q = BoardColumn.objects.filter(board=board)
+
+    data["board"]["columns"] = [None] * board_column_q.count()
+    for i, board_column in enumerate(board_column_q.all().order_by("column_number")):
+        column = {}
+
+        column["title"] = board_column.column.title
+
+        column_cell_q = ColumnCell.objects.filter(column=board_column.column)
+
+        num_rows = column_cell_q.count()
+        if num_rows > data["board"]["num_rows"]:
+            data["board"]["num_rows"] = num_rows
+
+        column["cards"] = [None] * num_rows
+        for j, column_cell in enumerate(column_cell_q.all().order_by("row_number", "value")):
+            card = {}
+
+            card["value"] = column_cell.value
+
+            column["cards"][j] = card
+
+        data["board"]["columns"][i] = column
+
+    print(data)
+
+    return render(request, "myapp/board-screen.html", data)
+
+
+def question(request: HttpRequest, board_id: int, column_id: int, card_id: int):
     template_name = "myapp/question-screen.html"
-
     if "X-Partial" in request.headers:
         template_name += "#" + request.headers["X-Partial"]
 
-    return render(request, template_name, {
+    data = {
         "players": [
-            {'name': 'irata'},
-            {'name': 'irata'},
-            {'name': 'irata'},
-            {'name': 'irata'},
-        ],
-        "question": {"text": "Lorem ipsum"}
-    })
+            {"name": "irata"},
+            {"name": "irata"},
+            {"name": "irata"},
+            {"name": "irata"},
+        ]
+    }
+
+    card = (
+        ColumnCell.objects.filter(
+            column=(
+                BoardColumn.objects.filter(board=Board.objects.get(id=board_id))
+                .order_by("column_number")[column_id - 1]
+                .column
+            )
+        )
+        .order_by("row_number", "value")[card_id - 1]
+        .card
+    )
+
+    data["question"] = {"text": card.front}
+
+    return render(request, template_name, data)

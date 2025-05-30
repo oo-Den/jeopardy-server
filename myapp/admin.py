@@ -10,7 +10,7 @@ class ColumnInline(admin.TabularInline):
 @admin.register(Board)
 class BoardAdmin(admin.ModelAdmin):
     fields = ['name', 'owner']
-    list_display = ['name', 'get_columns', 'get_cards_num', 'owner']
+    list_display = ['name', 'get_columns', 'get_cards_num', 'owner', 'id']
 
     inlines = [ColumnInline]
 
