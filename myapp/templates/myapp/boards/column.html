@@ -1,0 +1,12 @@
+<div class="card column-title" style="grid-row: 1">
+    <span>{{ column.title }}</span>
+</div>
+<div class="column" id="column-{{ column_id }}"
+     style="grid-row: 2;
+            display: grid;
+            grid-template-rows: repeat({% if board.flexible_layout %}{{ column.cards | length }}{% else %}{{ board.num_rows }}{% endif %}, 1fr);
+            gap: 8px;">
+    {% for card in column.cards %}
+        {% include 'myapp/boards/card.html' with card_id=forloop.counter %}
+    {% endfor %}
+</div>

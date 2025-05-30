@@ -1,0 +1,11 @@
+{% extends "myapp/main.html" %}
+{% load partials %}
+
+{% block players %}
+    {% include 'myapp/players/default.html' %}
+{% endblock %}
+{% partialdef game-screen %}
+    {% block game_screen %}
+        {%include 'myapp/question.html' %}
+    {% endblock %}
+{% endpartialdef game-screen %}

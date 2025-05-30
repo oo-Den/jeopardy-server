@@ -1,0 +1,7 @@
+<button class="card" 
+        hx-get="questions/{{ column_id }}/{{ card_id }}/"
+        hx-push-url="true"
+        hx-headers='{"X-Partial": "game-screen"}'
+        hx-swap="innerHTML" hx-target="#game-screen">
+    <span>{{ currency_sign }}{{ card.value }}</span>
+</button>
